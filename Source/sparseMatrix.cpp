@@ -1,0 +1,95 @@
+#include<iostream>
+using namespace std;
+
+int main(){
+   int spa1[5][5],spa2[5][5],sum[5][5],element;
+   int r=3,c=3;
+   int i,j,s,p;
+   int top1=0,top2=0;
+   
+   cout<<"\nAssuming 3x3 matrix.\n";
+   cout<<"\nEnter the first matrix("<<r<<"*"<<c<<"):\n";		//getMatrix1
+   for(i=1;i<=r;i++){
+      for(j=1;j<=c;j++){
+	  cin>>element;
+	  if(element!=0){
+	    top1=top1+1;
+	    spa1[top1][1]=i;
+	    spa1[top1][2]=j;
+	    spa1[top1][3]=element;
+		}
+      }
+   }
+   spa1[0][1]=r;
+   spa1[0][2]=c;
+   spa1[0][3]=top1;
+   
+   cout<<"\nEnter the second matrix("<<r<<"*"<<c<<"):\n";		//getMatrix2
+   for(i=1;i<=r;i++){
+      for(j=1;j<=c;j++){
+	  cin>>element;
+	  if(element!=0){
+	    top2=top2+1;
+	    spa2[top2][1]=i;
+	    spa2[top2][2]=j;
+	    spa2[top2][3]=element;
+		}
+      }
+   }
+   spa2[0][1]=r;
+   spa2[0][2]=c;
+   spa2[0][3]=top2;
+ 
+   cout<<"\nFirst sparse matrix :\nRow\tColumn\tElement\n";		//matrix 1
+   for(i=0;i<=top1;i++){
+      cout<<spa1[i][1]<<"\t"<<spa1[i][2]<<"\t"<<spa1[i][3]<<"\n";
+   }
+   
+   cout<<"\nSecond sparse matrix :\nRow\tColumn\tElement\n";		//matrix 2
+   for(i=0;i<=top2;i++){
+      cout<<spa2[i][1]<<"\t"<<spa2[i][2]<<"\t"<<spa2[i][3]<<"\n";
+   }
+ 
+   // Addition 
+    i=j=s=1;
+   while((i<=top1)&&(j<=top2)){
+   	if(spa1[i][1]==spa2[j][1]){    // if rows are equal
+	   if(spa1[i][2]==spa2[j][2]){ // if columns are equal
+	    sum[s][1]=spa1[i][1];
+	    sum[s][2]=spa1[i][2];
+	    sum[s][3]=spa1[i][3]+spa2[j][3];
+	    i++;j++;
+	    if(sum[s][3]!=0)
+		s++;
+		}
+
+
+		if(i<=top1){
+			for(int p=i;p<=top1;p++){
+			sum[s][1]=spa1[p][1];
+	 		sum[s][2]=spa1[p][2];
+	 		sum[s][3]=spa1[p][3];
+			s++;
+			}
+		}else if(j<=top2){
+      		for(int p=j;p<=top2;p++){
+	 		sum[s][1]=spa2[p][1];
+	 		sum[s][2]=spa2[p][2];
+	 		sum[s][3]=spa2[p][3];
+			s++;
+			}
+		}
+		
+		sum[0][1]=r;
+  		sum[0][2]=c;
+  		sum[0][3]=s-1;
+ 
+  // displaying the sum matrix
+   cout<<"\nThe sum is :\nRow\tColumn\tElement\n";
+   for(i=0;i<s;i++){
+      cout<<sum[i][1]<<"\t"<<sum[i][2]<<"\t"<<sum[i][3]<<"\n";
+   }
+   return 0;
+}
+}}
+

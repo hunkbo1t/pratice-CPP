@@ -1,0 +1,141 @@
+Q1] Write a C++ program to implement a)Stack b)Queue using Link-list.
+--------------------------------
+#include<iostream>
+using namespace std;
+class Node { public: int data; Node *next; };								//utility class 
+class Stack{																//stack-Link-list
+	Node *top; int val;
+	public:
+		Stack(){top = NULL;}
+		void push(); void pop();											//utility members
+		void putStack(); void getStack();
+};
+void Stack:: push() { 														//push
+		Node *nn;
+   cout<<"Enter value to be pushed:"<<endl; cin>>val; 
+   nn=new Node; nn->data = val; nn->next = top; 
+   top = nn; cout<<"\nElement inserted.\n"; }
+void Stack:: pop() {														//pop
+   if(top==NULL)
+      cout<<"Stack Underflow"<<endl;
+   else {
+      cout<<"The popped element is "<< top->data <<endl;
+      top = top->next; } }
+void Stack:: putStack() {													//display
+   		Node* ptr;
+   if(top==NULL){ cout<<"Stack is empty!"; }
+      else { ptr = top; cout<<"Stack elements are: ";
+      while (ptr != NULL) { cout<< ptr->data <<"|"; ptr = ptr->next; } }
+   cout<<endl; }
+void Stack::getStack() {													//getStack
+		int ch, val; 
+   cout<<"\n1) Push in stack 2) Pop from stack 3) Display stack"<<endl;
+   cout<<"4) Exit\n";
+   do { cout<<"Enter choice: "; cin>>ch;
+      switch(ch) {
+         case 1: push(); break;
+         case 2: pop(); break;
+         case 3: putStack(); break;
+         case 4: cout<<"Exit"<<endl; break;
+			default: cout<<"Invalid Choice"<<endl; }
+   }while(ch!=4); }
+class Que{																	//Queue-link-list
+		Node* front = NULL; Node* rear = NULL; Node* temp;
+	public:
+		void Insert(); void Delete();										//utility members
+		void putQue(); void getQue();
+};
+void Que:: Insert() {														//insert
+   		int val;
+   cout<<"\nInsert the element in queue : "; cin>>val;
+   if (rear == NULL) {
+      rear = new Node; rear->next = NULL;
+      rear->data = val; front = rear;
+   }else { temp=new Node; rear->next = temp;
+      temp->data = val; temp->next = NULL;
+      rear = temp; } }
+void Que:: Delete() {														//delete
+   		temp = front;
+   if (front == NULL) {
+      cout<<"Underflow"<<endl; return; 
+	}else if (temp->next != NULL) { temp = temp->next;
+      cout<<"Element deleted from queue is : "<<front->data<<endl;
+      delete(front); front = temp;
+   	}else{ cout<<"Element deleted from queue is : "<<front->data<<endl;
+      delete(front); front = NULL; rear = NULL; } }
+void Que:: putQue() {														//display
+   		temp = front;
+   if ((front == NULL) && (rear == NULL)) {
+   		cout<<"Queue is empty"<<endl; return; }
+   		cout<<"Queue elements are: ";
+   while (temp != NULL) {
+      cout<<temp->data<<" "; temp = temp->next;
+   }cout<<endl; }
+void Que::getQue(){															//getQue
+		int ch;
+   cout<<"1) Insert element to queue ";
+   cout<<"2) Delete element from queue ";
+   cout<<"3) Display all the elements of queue ";
+   cout<<"4) Exit"<<endl;
+do { cout<<"Enter your choice : "; cin>>ch;
+   switch (ch) {
+      case 1: Insert(); break;
+      case 2: Delete(); break;
+      case 3: putQue(); break;
+      case 4: cout<<"Exit"<<endl; break;
+		default: cout<<"Invalid choice"<<endl;
+   } } while(ch!=4); }   
+class StructLL:public Stack , public Que{ };								//functional class
+int main(){
+	StructLL s; int ch;
+	do{ cout<<"\nEnter choice: 1]Stack 2]Queue 3]Quit : "; cin>>ch;
+				switch(ch){
+					case 1: s.getStack(); break;
+					case 2: s.getQue(); break;
+					case 3: cout<<"Exit loop."; exit(1); break;
+						default: cout<<"\nWrong choice\n"; } }while(ch!=3);
+				return 0; }
+--------------------------------
+Output:
+Enter choice: 1]Stack 2]Queue 3]Quit : 2
+1) Insert element to queue 2) Delete element from queue 3) Display all the elements of queue 4) Exit
+Enter your choice : 1
+
+Insert the element in queue : 1
+Enter your choice : 1
+
+Insert the element in queue : 2
+Enter your choice : 1
+
+Insert the element in queue : 3
+Enter your choice : 3
+Queue elements are: 1 2 3
+Enter your choice : 2
+Element deleted from queue is : 1
+Enter your choice : 2
+Element deleted from queue is : 2
+Enter your choice : 2
+Element deleted from queue is : 3
+Enter your choice : 2
+Underflow
+Enter your choice : 3
+Queue is empty
+Enter your choice : 4
+Exit
+
+Enter choice: 1]Stack 2]Queue 3]Quit : 1
+1) Push in stack 2) Pop from stack 3) Display stack
+4) Exit
+Enter choice: 1
+Enter value to be pushed: 1
+
+Element inserted.
+Enter choice: 2
+The popped element is 1
+Enter choice: 3
+Stack is empty!
+Enter choice: 4
+Exit
+
+Enter choice: 1]Stack 2]Queue 3]Quit : 3
+Exit loop.

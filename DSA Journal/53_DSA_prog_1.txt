@@ -1,0 +1,91 @@
+Q1] Write a C++ program to implement recursive and non-recursive a)Linear Search b)Binary Search.
+-------------------------------
+#include<iostream>
+using namespace std;
+class Search{
+    public:														// Recursive and non-recursive
+    int rbiSearch(int list[], int key, int low, int high);		// binarySearch		 
+    int nbiSearch(int list[], int key, int low, int high); 
+    int rlSearch(int list[], int key, int n);					// linearSearch
+    int nlSearch(int list[], int key, int n);  
+    void check(int pos);										// utility members
+}; 																//end of class Search
+    
+    int main(){
+        int ch, n, key, list[20], pos;							//var init
+        Search s;   											//class obj	
+    cout<<"\nEnter number of elements: "; cin>>n;				//get list 
+    cout<<"\nEnter "<<n<<" elements in ascending order: ";		//get elements
+        for(int i=0; i<n; i++){ cin>>list[i]; }
+    cout<<"\nEnter key element: "; cin>>key;					//get key
+    cout<<"\nBinary_Search :: 1]recur 2]non-recur
+			\nLinear_Search :: 3]recur 4]non-recur\n5]Exit\n";	//Search menu
+    do{ cout<<"\nEnter choice: "; cin>>ch;
+        switch (ch){
+        case 1: pos = s.rbiSearch(list, key, 0, n-1); s.check(pos);   break;
+        case 2: pos = s.nbiSearch(list, key, 0, n-1); s.check(pos);   break;
+        case 3: pos = s.rlSearch(list, key, n); s.check(pos);   break;
+        case 4: pos = s.nlSearch(list, key, n); s.check(pos);   break;
+        case 5: exit(1);    break;
+			default:    cout<<"\nTry again\n";  break;
+        }}while(ch != 5);   return 0; }
+void Search :: check(int pos){										//utility member Check
+    if(pos == -1){ 
+		cout<<"\nElement not found!";
+    }else{ 
+		cout<<"\nElement found at "<<pos<<"th index.\n"; } }
+int Search :: rlSearch(int list[], int key, int n){					// Recursive "linear" Search
+    if(n<=0){ return -1;
+	}else if(list[n]==key){
+		return n;
+		}else{
+		return rlSearch(list, key, n-1); } }
+int Search :: nlSearch(int list[], int key, int n){					// Non-Recursive "linear" Search
+        int pos=-1;
+    for(int i=0;i<n;i++){
+        if(key == list[i]){ 
+			pos = i; break;
+		} } return pos; } 
+int Search :: rbiSearch(int list[], int key, int low, int high){	//Recursive "binary" Search
+        int mid, pos = -1;
+    while (low <= high){
+        mid = (low + high) / 2;
+    if(key == list[mid]){ 
+		pos = mid; return pos; 
+        } else if(key < list[mid]){ 
+			return rbiSearch(list, key, low, mid-1);
+        } else { 
+			return rbiSearch(list, key, mid+1, high);
+		} }   return pos; }
+int Search :: nbiSearch(int list[], int key, int low, int high){	// Non-Recursive "binary" Search 
+        int mid, pos = -1;
+    while (low <= high){
+        mid = (low + high) / 2;
+    if(key == list[mid]){ 
+		pos = mid; break;
+	} else if(key < list[mid]){
+        high = mid-1;
+		}else{ low = mid+1; } } }
+-------------------------------			
+Output:
+Enter number of elements: 10
+Enter 10 elements in ascending order: 2 4 6 8 10 12 14 65 70 123
+Enter key element: 14
+
+Binary_Search :: 1]recur        2]non-recur
+Linear_Search :: 3]recur        4]non-recur
+5]Exit
+
+Enter choice: 1
+Element found at 6th index.
+
+Enter choice: 2
+Element found at 6th index.
+
+Enter choice: 3
+Element found at 6th index.
+
+Enter choice: 4
+Element found at 6th index.
+
+Enter choice: 5

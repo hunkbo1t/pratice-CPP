@@ -1,0 +1,66 @@
+#include<iostream>
+using namespace std;
+class node{ public: node *l, *r; int data; };				//utility class
+class bst:public node{
+	node *root;
+	public: bst(){ root=NULL; }
+	int isempty(){ return(root==NULL); }
+	void insert(int item);
+	void inorder(node*);
+	void preorder(node*); void postorder(node*);
+	void inorder_trav();									//utility members
+	void preorder_trav(); void postorder_trav();
+};
+void bst::insert(int item){									//insert
+	node *p = new node; node *parent;
+	p->data=item;
+	p->l=NULL; p->r=NULL;
+	parent=NULL;
+	if(isempty())
+		root=p;
+	else{
+		node *ptr; ptr=root;
+		while(ptr!=NULL){
+			parent=ptr;
+			if(item>ptr->data)
+				ptr=ptr->r;
+			else
+				ptr=ptr->l; 
+		} if(item<parent->data)
+				parent->l=p;
+			else
+				parent->r=p; } }
+void bst::inorder_trav(){ inorder(root); }					
+void bst::preorder_trav(){ preorder(root); }
+void bst::postorder_trav(){ postorder(root); }
+void bst::inorder(node *ptr){								//inorder
+	if(ptr!=NULL){
+		inorder(ptr->l);
+		cout<<"|"<<ptr->data<<"|";
+		inorder(ptr->r); } }
+void bst::preorder(node *ptr){								//pre order
+	if(ptr!=NULL){
+		cout<<"|"<<ptr->data<<"|";
+		preorder(ptr->l);
+		preorder(ptr->r); } }
+void bst::postorder(node *ptr){								//post order
+	if(ptr!=NULL){
+		postorder(ptr->l);
+		postorder(ptr->r);
+		cout<<"|"<<ptr->data<<"|"; } }
+int main(){													//main fun
+	int ch,data; bst b;
+	cout<<"\n1]Insert 2]Inorder 3]preOrder 4]postOrder 5]exit";
+	while(1){ cout<<"\nEnter choice: "; cin>>ch;
+		switch(ch){
+			case 1: cout<<"\nEnter data: "; cin>>data;
+					b.insert(data); break;
+			case 2:  cout<<"\nInorder: ";
+					b.inorder_trav(); break; 
+			case 3:  cout<<"\npreorder: ";
+					b.preorder_trav(); break;
+			case 4:  cout<<"\npostorder: ";
+					b.postorder_trav(); break;
+			case 5: exit(1); break;
+				default: cout<<"Wrong ch"; break;
+		} } return 0; }

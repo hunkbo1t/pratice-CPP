@@ -1,0 +1,126 @@
+Q1] Write a C++ program to implement a)Stack b)Queue using array.
+--------------------------------
+#include<iostream>
+#define size 8
+using namespace std;
+class Stack{
+	int stack[size],top=-1;
+	public:
+		void push(int val); void pop();						//Stack opt
+		void putdata(); void getStack();					//utility members
+};
+void Stack::push(int val){ 									//push
+	if(top>=size-1)
+		cout<<"Stack Overflow!\n";
+	else
+		top++; stack[top]=val; }
+void Stack::pop(){											//pop
+	if(top<=-1)
+		cout<<"Stack Underflow!\n";
+	else
+		cout<<stack[top]<<" is been popped.\n"; top--; }
+void Stack::putdata(){										//display
+	if(top>=0){
+		cout<<"Elements are: ";
+		for(int i=top;i>=0;i--){
+			cout<<stack[i]<<" ";
+		} }else{ cout<<"Stack empty!\n"; } } 
+void Stack::getStack(){										//getStack
+		int ch,val;
+	cout<<"\n1]Push	2]Pop 3]Display	4]Exit\n";
+	do{ cout<<"\nEnter choice: "; cin>>ch;
+	switch(ch){
+		case 1: cout<<"\nEnter a value: ";
+				cin>>val; push(val); break;
+		case 2: pop(); break;
+		case 3: putdata(); break;
+		case 4: cout<<"\nExit the menu.\n"; break;
+			default: cout<<"\nInvalid choice!\n";
+	} }while(ch!=4); }
+class Queue{												//Queue
+        int front,rear; int ele[size] ={0};
+    public:
+        Queue(){ front =  0; rear  = -1; cout<<"\nInitilization stack to 0\nStack size: 8\n"; }
+        void insertQueue(int  item); int  deleteQueue();
+        void getQue(); void putQue();						//utility members
+        int  isFull(); int  isEmpty();
+};
+int Queue::isFull(){										//To check queue is full or not
+    	int full = 0 ;
+    if( rear == size-1 )
+        full = 1; return full; }
+int Queue::isEmpty(){										//To check queue is empty or not
+    	int empty = 0 ;
+    if( front == rear + 1 ) empty = 1; return empty; }
+void Queue:: insertQueue(int item){							//Insert Item into queue
+    if( isFull() ){
+        cout<<"\nQueue OverFlow" << endl; return; }   
+    ele[++rear]=item;
+    cout<<"\nInserted Value: " << item; }
+int Queue:: deleteQueue(){									//delete item from queue
+    if( isEmpty() ){
+        cout<<"\nQueue Underflow" << endl; return -1; }
+    ele[front++]; return 0; }
+void Queue::putQue(){										//display
+	if( isEmpty() ){ cout<<"\nQueue Underflow" << endl; }
+	for(int i=0;i<size;i++){ cout<<ele[i]<<" "; } }			//GetQueue
+void Queue::getQue(){
+		int ch,item=0; Queue q;
+    cout<<"\n[1]Insert	[2]Delete	[3]Display\n[4]Quit\n";
+		do{ cout<<"Enter your choice : "; cin>>ch;
+        switch(ch){
+        case 1: cout<<"\nInsert elements in queue: "; cin>>item;	
+				q.insertQueue(item); cout<<"\nItem inserted\n"; break;
+		case 2:	cout<<"\nDelete the element from queue\n";
+				q.deleteQueue(); cout<<"\nItems in Queue:\t"; break;
+		case 3: q.putQue(); break;
+		case 4:	exit(1); break;
+			default:	cout<<"\nWrong choice\n";
+		} } while(ch != 4); }
+class Struct:public Stack, public Queue{};					//functional class
+int main(){
+	Struct s; int ch;
+		do{ cout<<"\nEnter choice: 1]Stack 2]Queue 3]Quit : "; cin>>ch;
+				switch(ch){
+					case 1: s.getStack(); break;
+					case 2: s.getQue(); break;
+					case 3: cout<<"Exit loop."; exit(1); break;
+					default: cout<<"\nWrong choice\n"; } }while(ch!=3);
+				return 0; }
+--------------------------------
+Output:
+Enter choice: 1]Stack 2]Queue 3]Quit : 1
+
+1]Push  2]Pop 3]Display 4]Exit
+Enter choice: 1
+
+Enter a value: 1
+Enter choice: 2
+1 is been popped.
+
+Enter choice: 3
+Stack empty!
+
+Enter choice: 4
+Exit the menu.
+
+Enter choice: 1]Stack 2]Queue 3]Quit : 2
+Initilization stack to 0
+Stack size: 8
+
+[1]Insert       [2]Delete       [3]Display
+[4]Quit
+Enter your choice : 1
+Insert elements in queue: 1
+Inserted Value: 1
+Item inserted
+
+Enter your choice : 3
+Queue Underflow
+1 0 0 0 0 0 0 0
+Enter your choice : 2
+Delete the element from queue
+
+Enter your choice : 3
+Queue Underflow
+Enter your choice : 4
